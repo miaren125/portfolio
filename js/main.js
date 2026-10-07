@@ -73,11 +73,11 @@
   /* ---------- Gafete: péndulo con cuerda rígida (lanyard) ---------- */
   const badge = $("#badge"), box = $("#lanyard"), s1 = $("#s1"), s2 = $("#s2");
   const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const PIVOT_Y = 64, L = 180, K = 0.006, DAMP = 0.994, MAXA = 1.35;
-  badge.style.top = (PIVOT_Y + L) + "px";
-  let th = still ? 0 : 0.6, w = 0, drag = false;
+  const mq = matchMedia("(max-width:820px)"); let PIVOT_Y = 64; const L = 180, K = 0.006, DAMP = 0.994, MAXA = 1.35;
+  let th = still ? 0 : 0.35, w = 0, drag = false;
 
   function frame() {
+    PIVOT_Y = mq.matches ? 0 : 64; badge.style.top = (PIVOT_Y + L) + "px";
     if (!drag) { w += -K * Math.sin(th); w *= DAMP; th += w; }
     const sin = Math.sin(th), cos = Math.cos(th);
     badge.style.transform = `translate(${L * sin}px,${L * (cos - 1)}px) rotate(${-th}rad)`;
