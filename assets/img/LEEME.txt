@@ -5,3 +5,4 @@ Pon aqui tus imagenes con estos nombres exactos:
   mia.jpg      -> tu foto para el gafete
 Y tu CV en: assets/cv/CV-Mia-Valenzuela.pdf
 Mientras no existan, la pagina usa degradados de la paleta como respaldo.
+  folder-hola.png -> foto/fondo del folder donde va 'Hola, soy...' (hero)

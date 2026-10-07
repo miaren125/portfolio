@@ -7,7 +7,7 @@
 <meta name="description" content="Portafolio de Mia Renee Valenzuela Yescas">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Luxurious+Script&family=Cinzel:wght@500;700&family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -23,7 +23,7 @@
 
 <!-- HERO: una sola pantalla -->
 <section id="home" class="hero">
-  <div class="hero-card glass">
+  <div class="hero-folder">
     <p data-i18n="hero.hello">¡Hola! soy:</p>
     <h1>Mia Renee<br>Valenzuela<br>Yescas</h1>
     <p class="role" data-i18n="hero.role">Puesto al que aspiras (placeholder)</p>
@@ -34,7 +34,6 @@
     <div class="badge glass" id="badge" tabindex="0" aria-label="Gafete interactivo, arrástralo">
       <span class="clip"></span>
       <div class="photo"></div>
-      <button class="lang glass" id="langBtn" type="button" aria-label="Cambiar idioma">ES / EN</button>
     </div>
     <ul class="socials">
       <li><a class="glass" href="https://www.linkedin.com/in/TU-USUARIO" target="_blank" rel="noopener" aria-label="LinkedIn">in</a></li>
@@ -49,29 +48,25 @@
 <!-- ABOUT -->
 <section id="about" class="sec bg-fondo">
   <div class="wrap">
-    <div class="grid-2">
-      <article class="panel glass">
+    <div class="about glass">
+      <article>
         <h2 data-i18n="about.title">Descripción</h2>
-        <p data-i18n="about.who">¿Quién eres? (placeholder)</p>
-        <p data-i18n="about.can">¿Qué puedes hacer? (placeholder)</p>
+        <p data-i18n="about.who">¿Quién eres?</p>
+        <p data-i18n="about.can">¿Qué puedes hacer?</p>
         <a class="btn glass" href="assets/cv/CV-Mia-Valenzuela.pdf" download data-i18n="about.cv">CV descargable</a>
       </article>
-
-      <article class="panel glass">
+      <article>
         <h2 data-i18n="skills.title">Habilidades</h2>
         <h3 data-i18n="skills.hard">Hard skills</h3>
         <ul class="bars" id="hardSkills"></ul>
         <h3 data-i18n="skills.soft">Soft skills</h3>
         <ul class="chips" id="softSkills"></ul>
       </article>
-    </div>
-
-    <div class="grid-2">
-      <article class="panel glass">
+      <article>
         <h2 data-i18n="edu.title">Educación</h2>
         <ul class="timeline" id="eduList"></ul>
       </article>
-      <article class="panel glass">
+      <article>
         <h2 data-i18n="aspire.title">Puestos a los que aspiro</h2>
         <ul class="chips" id="aspireList"></ul>
       </article>
@@ -93,18 +88,24 @@
 </section>
 
 <!-- CONTACTO -->
-<section id="contacto" class="sec bg-fondo">
-  <div class="wrap grid-2 contact panel glass">
+<section id="contacto" class="sec bg-fondo contact-sec">
+  <div class="contact">
     <div>
       <p data-i18n="hero.hello">¡Hola! soy:</p>
       <h2 class="big">Mia Renee<br>Valenzuela<br>Yescas</h2>
     </div>
     <div>
-      <p data-i18n="contact.thanks">Gracias por querer contactarme (placeholder)</p>
+      <p data-i18n="contact.thanks">Gracias por querer contactarme</p>
       <ul class="contact-list" id="contactList"></ul>
     </div>
   </div>
-  <footer>© <span id="year"></span> Mia Renee Valenzuela Yescas</footer>
+  <footer>
+    <div class="langs glass" role="group" aria-label="Idioma / Language">
+      <button type="button" data-lang="es">ES</button>
+      <button type="button" data-lang="en">EN</button>
+    </div>
+    <p>© <span id="year"></span> Mia Renee Valenzuela Yescas</p>
+  </footer>
 </section>
 
 <!-- MODAL DE DETALLES -->

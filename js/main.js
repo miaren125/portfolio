@@ -8,6 +8,7 @@
   /* ---------- Render ---------- */
   function render() {
     document.documentElement.lang = lang;
+    document.querySelectorAll(".langs button").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === lang));
     document.querySelectorAll("[data-i18n]").forEach(el => el.textContent = t(el.dataset.i18n));
 
     $("#hardSkills").innerHTML = HARD_SKILLS.map(s =>
@@ -65,37 +66,35 @@
   $("#closeModal").onclick = () => modal.close();
 
   /* ---------- Idioma ---------- */
-  $("#langBtn").addEventListener("click", () => { lang = lang === "es" ? "en" : "es"; localStorage.setItem("lang", lang); render(); });
-  $("#langBtn").addEventListener("pointerdown", e => e.stopPropagation()); // no arrastrar al presionar el botón
+  document.querySelectorAll(".langs button").forEach(btn => btn.addEventListener("click", () => {
+    lang = btn.dataset.lang; localStorage.setItem("lang", lang); render();
+  }));
 
-  /* ---------- Gafete con física (resorte + arrastre) ---------- */
+  /* ---------- Gafete: péndulo con cuerda rígida (lanyard) ---------- */
   const badge = $("#badge"), box = $("#lanyard"), s1 = $("#s1"), s2 = $("#s2");
   const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let x = 0, y = 0, vx = still ? 0 : 6, vy = 0, drag = null;
+  const PIVOT_Y = 64, L = 180, K = 0.006, DAMP = 0.994, MAXA = 1.35;
+  badge.style.top = (PIVOT_Y + L) + "px";
+  let th = still ? 0 : 0.6, w = 0, drag = false;
 
   function frame() {
-    if (!drag) {
-      vx += -x * 0.03; vy += -y * 0.03;   // resorte hacia el centro
-      vx *= 0.97; vy *= 0.97;             // fricción
-      x += vx; y += vy;
-    }
-    const angle = Math.max(-35, Math.min(35, x / 4));
-    badge.style.transform = `translate(${x}px,${y}px) rotate(${angle}deg)`;
-    const b = box.getBoundingClientRect(), r = badge.getBoundingClientRect();
-    const ax = b.width / 2, w = 34;                // anclas fijas arriba
-    const tx = r.left - b.left + r.width / 2, ty = r.top - b.top + 6;
-    s1.setAttribute("x1", ax - w); s1.setAttribute("y1", 0); s1.setAttribute("x2", tx - 12); s1.setAttribute("y2", ty);
-    s2.setAttribute("x1", ax + w); s2.setAttribute("y1", 0); s2.setAttribute("x2", tx + 12); s2.setAttribute("y2", ty);
+    if (!drag) { w += -K * Math.sin(th); w *= DAMP; th += w; }
+    const sin = Math.sin(th), cos = Math.cos(th);
+    badge.style.transform = `translate(${L * sin}px,${L * (cos - 1)}px) rotate(${-th}rad)`;
+    const cx = box.clientWidth / 2, kx = cx + L * sin, ky = PIVOT_Y + L * cos;
+    const set = (ln, ax, bx) => { ln.setAttribute("x1", ax); ln.setAttribute("y1", PIVOT_Y); ln.setAttribute("x2", bx); ln.setAttribute("y2", ky); };
+    set(s1, cx - 12, kx - 14 * cos); s1.setAttribute("y2", ky + 14 * sin);
+    set(s2, cx + 12, kx + 14 * cos); s2.setAttribute("y2", ky - 14 * sin);
     requestAnimationFrame(frame);
   }
-  badge.addEventListener("pointerdown", e => { drag = {px: e.clientX - x, py: e.clientY - y}; badge.classList.add("dragging"); badge.setPointerCapture(e.pointerId); });
-  badge.addEventListener("pointermove", e => {
-    if (!drag) return;
-    const nx = e.clientX - drag.px, ny = e.clientY - drag.py;
-    vx = nx - x; vy = ny - y;
-    x = Math.max(-160, Math.min(160, nx)); y = Math.max(-40, Math.min(160, ny));
-  });
-  const end = () => { drag = null; badge.classList.remove("dragging"); };
+  function aim(e) {
+    const r = box.getBoundingClientRect();
+    const next = Math.max(-MAXA, Math.min(MAXA, Math.atan2(e.clientX - r.left - r.width / 2, Math.max(e.clientY - r.top - PIVOT_Y, 20))));
+    w = w * 0.5 + (next - th) * 0.5; th = next;
+  }
+  badge.addEventListener("pointerdown", e => { drag = true; badge.classList.add("dragging"); badge.setPointerCapture(e.pointerId); aim(e); });
+  badge.addEventListener("pointermove", e => { if (drag) aim(e); });
+  const end = () => { drag = false; badge.classList.remove("dragging"); };
   badge.addEventListener("pointerup", end); badge.addEventListener("pointercancel", end);
 
   $("#year").textContent = new Date().getFullYear();
