@@ -1,0 +1,7 @@
+Pon aqui tus imagenes con estos nombres exactos:
+  laptop.jpg   -> fondo del hero (la laptop)
+  fondo.jpg    -> fondo de las secciones (About, Contacto)
+  folders.jpg  -> fondo de la seccion de proyectos (folders)
+  mia.jpg      -> tu foto para el gafete
+Y tu CV en: assets/cv/CV-Mia-Valenzuela.pdf
+Mientras no existan, la pagina usa degradados de la paleta como respaldo.
