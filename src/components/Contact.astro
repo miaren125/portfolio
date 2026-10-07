@@ -1,0 +1,34 @@
+---
+import T from './T.astro';
+import { profile, contacts } from '../data/content';
+import { asset } from '../lib/asset';
+const vars = `--bg:url(${asset('images/fondo-contacto.jpg')});--bg-m:url(${asset('images/fondo-contacto-m.jpg')})`;
+---
+<section id="contacto" class="sec sec-contact" style={vars}>
+  <div class="contact">
+    <div>
+      <p><T es="¡Hola! soy:" en="Hi! I'm:" /></p>
+      <h2 class="big" set:html={profile.name.join('<br>')} />
+    </div>
+    <div>
+      <p><T es="Gracias por querer contactarme. Placeholder: escribe aquí un mensaje corto." en="Thanks for wanting to reach out. Placeholder: write a short message here." /></p>
+      <ul class="contact-list">
+        <li><a href={contacts.linkedin} target="_blank" rel="noopener"><i class="glass">in</i>LinkedIn</a></li>
+        <li><a href={`mailto:${contacts.email}`}><i class="glass">@</i>{contacts.email}</a></li>
+        <li><a href={contacts.github} target="_blank" rel="noopener"><i class="glass">gh</i>GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>
+    <div class="langs glass" role="group" aria-label="Idioma / Language">
+      <button type="button" data-lang="es" aria-pressed="true">ES</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+    <p>© {new Date().getFullYear()} Mia Renee Valenzuela Yescas</p>
+  </footer>
+</section>
+
+<script>
+  import '../scripts/lang';
+</script>
